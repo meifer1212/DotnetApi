@@ -1,0 +1,24 @@
+@DotnetApi_HostAddress = http://localhost:5017
+
+GET {{DotnetApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+@position=2
+GET {{DotnetApi_HostAddress}}/weatherforecast/{{position}}
+
+###
+
+
+DELETE {{DotnetApi_HostAddress}}/weatherforecast/{{position}}
+
+###
+
+PATCH {{DotnetApi_HostAddress}}/weatherforecast?position={{position}}
+Content-Type: application/json
+{
+  "test": "test"
+}
+
+###
