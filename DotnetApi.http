@@ -5,7 +5,7 @@ Accept: application/json
 
 ###
 
-@position=2
+@position=22
 GET {{DotnetApi_HostAddress}}/weatherforecast/{{position}}
 
 ###

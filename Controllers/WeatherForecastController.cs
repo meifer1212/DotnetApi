@@ -78,8 +78,9 @@ namespace DotnetApi.Controllers
         /// </summary>
         /// <returns>List of Weather Forecast</returns>
         [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<WeatherForecast> Get([FromServices] ILogger<WeatherForecastController> logger)
         {
+            logger.LogInformation("CONSOLE. Getting all weather forecasts.");
             return ListWatherForecast;
         }
     }
