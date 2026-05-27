@@ -3,6 +3,9 @@ using Scalar.AspNetCore;
 using System.Reflection;
 using DotnetApi.Middleware;
 using DotnetApi.Middlewares;
+using DotnetApi.Data;
+using Microsoft.EntityFrameworkCore;
+using DotnetApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +13,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddLogging();
 builder.Services.AddControllers();
+
+// Database
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseInMemoryDatabase("DotnetApi");
+});
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -44,6 +54,9 @@ builder.Services.AddCors(options =>
             }
             );
 });
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITaskService, TaskService>();
 
 var app = builder.Build();
 
