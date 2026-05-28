@@ -1,4 +1,5 @@
 ﻿using DotnetApi.Models;
+using DotnetApi.Models.Requests;
 using DotnetApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,15 +36,31 @@ namespace DotnetApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] TaskItem task)
+        public async Task<IActionResult> Create([FromBody] TaskItemUpsertRequest request)
         {
+            var task = new TaskItem
+            {
+                Id = request.Id ?? 0,
+                Title = request.Title,
+                IsCompleted = request.IsCompleted ?? false,
+                UserId = request.UserId
+            };
+
             var createdTask = await _taskService.CreateAsync(task);
             return CreatedAtAction(nameof(GetById), new { Id = createdTask?.Id }, createdTask);
         }
 
         [HttpPatch("{Id:int}")]
-        public async Task<IActionResult> Update(int Id, [FromBody] TaskItem task)
+        public async Task<IActionResult> Update(int Id, [FromBody] TaskItemUpsertRequest request)
         {
+            var task = new TaskItem
+            {
+                Id = request.Id ?? Id,
+                Title = request.Title,
+                IsCompleted = request.IsCompleted ?? false,
+                UserId = request.UserId
+            };
+
             var updatedTask = await _taskService.UpdateAsync(Id, task);
             if (updatedTask == null)
             {

@@ -1,4 +1,5 @@
 ﻿using DotnetApi.Models;
+using DotnetApi.Models.Requests;
 using DotnetApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,15 +38,31 @@ namespace DotnetApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] User user)
+        public async Task<IActionResult> Create([FromBody] UserUpsertRequest request)
         {
+            var user = new User
+            {
+                Id = request.Id ?? 0,
+                Name = request.Name,
+                Email = request.Email,
+                Role = (Role)request.Role
+            };
+
             var createdUser = await _userService.CreateAsync(user);
             return CreatedAtAction(nameof(GetById), new { Id = createdUser?.Id }, createdUser);
         }
 
         [HttpPatch("{Id:int}")]
-        public async Task<IActionResult> Update(int Id, [FromBody] User user)
+        public async Task<IActionResult> Update(int Id, [FromBody] UserUpsertRequest request)
         {
+            var user = new User
+            {
+                Id = request.Id ?? Id,
+                Name = request.Name,
+                Email = request.Email,
+                Role = (Role)request.Role
+            };
+
             var updatedUser = await _userService.UpdateAsync(Id, user);
             if (updatedUser == null)
             {
