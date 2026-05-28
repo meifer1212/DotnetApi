@@ -15,9 +15,14 @@ builder.Services.AddLogging();
 builder.Services.AddControllers();
 
 // Database
+//builder.Services.AddDbContext<AppDbContext>(options =>
+//{
+//    options.UseInMemoryDatabase("DotnetApi");
+//});
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseInMemoryDatabase("DotnetApi");
+    var connectionnString = builder.Configuration.GetConnectionString("SqlServerConnection") ?? string.Empty;
+    options.UseSqlServer(connectionnString);
 });
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
