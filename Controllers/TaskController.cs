@@ -56,6 +56,10 @@ namespace DotnetApi.Controllers
         public async Task<IActionResult> Delete(int Id)
         {
             var deleted = await _taskService.DeleteAsync(Id);
+            if (!deleted)
+            {
+                return NotFound();
+            }
             return Ok(deleted);
         }
     }
