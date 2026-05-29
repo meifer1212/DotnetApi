@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="../DotnetApi.Tests/DotnetApi.Tests.csproj" Id="d6b81349-4f0b-4c9b-8dab-503564baba85" />
   <Project Path="DotnetApi.csproj" />
 </Solution>

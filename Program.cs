@@ -14,15 +14,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddLogging();
 builder.Services.AddControllers();
 
-// Database
+// Database in momory
 //builder.Services.AddDbContext<AppDbContext>(options =>
 //{
 //    options.UseInMemoryDatabase("DotnetApi");
 //});
+
+// Database SQL SERVER
+//builder.Services.AddDbContext<AppDbContext>(options =>
+//{
+//    var connectionnString = builder.Configuration.GetConnectionString("SqlServerConnection") ?? string.Empty;
+//    options.UseSqlServer(connectionnString);
+//});
+
+//Database Postgres
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    var connectionnString = builder.Configuration.GetConnectionString("SqlServerConnection") ?? string.Empty;
-    options.UseSqlServer(connectionnString);
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection"));
 });
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
